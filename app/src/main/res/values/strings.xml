@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Lista Gaymer</string>
+    <string name="title_activity_login">Login</string>
+    <string name="icon_description">Icone do app</string>
+    <string name="user_placeholder">Nome de usuário</string>
+    <string name="password_placeholder">Senha</string>
+    <string name="entry">Entrar</string>
+    <string name="account_quetion">Não tem uma conta?</string>
+    <string name="new_account">faça seu cadastro aqui.</string>
+    <string name="email_placeholder">E-mail</string>
+    <string name="repeat_password_placeholder">Repita a senha</string>
+    <string name="register_placeholder">Cadastrar</string>
+</resources>
