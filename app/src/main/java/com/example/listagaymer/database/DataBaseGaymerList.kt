@@ -2,10 +2,8 @@ package com.example.listagaymer.database
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.sqlite.SQLiteConstraintException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import com.example.listagaymer.data.User
 
 class DataBaseGaymerList(context: Context): SQLiteOpenHelper(context, DataBaseGaymerList.DB_NAME, null, DataBaseGaymerList.DB_VERSION) {

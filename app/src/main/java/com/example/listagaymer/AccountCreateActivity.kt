@@ -47,6 +47,9 @@ class AccountCreateActivity : AppCompatActivity() {
                     email,
                     password
                 ))
+                if (login(username, password, this)) {
+                    finish()
+                }
             }
         } catch (e: SQLiteConstraintException) {
             Log.e("ERRO", e.stackTraceToString())
