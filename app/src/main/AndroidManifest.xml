@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ListaGaymer"
         tools:targetApi="31">
         <activity
+            android:name=".AddGameActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true" />
         <activity

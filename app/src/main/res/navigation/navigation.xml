@@ -35,9 +35,4 @@
         android:name="com.example.listagaymer.IntentGameFragment"
         android:label="fragment_intent_game"
         tools:layout="@layout/fragment_intent_game" />
-    <fragment
-        android:id="@+id/addGameFragment"
-        android:name="com.example.listagaymer.AddGameFragment"
-        android:label="fragment_add_game"
-        tools:layout="@layout/fragment_add_game" />
 </navigation>

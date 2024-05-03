@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.fragment_main)
         val navBottom: BottomNavigationView = binding.bottomViewMain
-        val fab: FloatingActionButton = binding.fab
         navBottom.setupWithNavController(navController)
 
         navBottom.setOnItemSelectedListener { item ->
@@ -38,10 +37,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.intentGameFragment -> navController.navigate(R.id.intentGameFragment)
             }
             true
-        }
-
-        fab.setOnClickListener{
-            navController.navigate(R.id.addGameFragment)
         }
 
 //        binding.logoutButton.setOnClickListener{ logout() }
