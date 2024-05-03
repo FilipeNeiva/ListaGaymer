@@ -17,6 +17,7 @@
 <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <FrameLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="?actionBarSize"
@@ -41,6 +42,7 @@
             app:contentInsetStart="0dp">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_view_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:menu="@menu/game_list_items" />

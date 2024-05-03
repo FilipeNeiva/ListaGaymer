@@ -25,4 +25,14 @@
         android:name="com.example.listagaymer.PlayingFragment"
         android:label="fragment_playing"
         tools:layout="@layout/fragment_playing" />
+    <fragment
+        android:id="@+id/doneGameFragment"
+        android:name="com.example.listagaymer.DoneGameFragment"
+        android:label="fragment_done_game"
+        tools:layout="@layout/fragment_done_game" />
+    <fragment
+        android:id="@+id/intentGameFragment"
+        android:name="com.example.listagaymer.IntentGameFragment"
+        android:label="fragment_intent_game"
+        tools:layout="@layout/fragment_intent_game" />
 </navigation>

@@ -2,9 +2,15 @@ package com.example.listagaymer
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -19,8 +25,22 @@ class MainActivity : AppCompatActivity() {
 
         if(!isLogged()) logout()
 
+        val navController = findNavController(R.id.fragment_main)
+        val navBottom: BottomNavigationView = binding.bottomViewMain
+        navBottom.setupWithNavController(navController)
+
+        navBottom.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.playingFragment -> navController.navigate(R.id.playingFragment)
+                R.id.doneGameFragment -> navController.navigate(R.id.doneGameFragment)
+                R.id.intentGameFragment -> navController.navigate(R.id.intentGameFragment)
+            }
+            true
+        }
+
 //        binding.logoutButton.setOnClickListener{ logout() }
     }
+
 
     private fun isLogged(): Boolean {
         val sharedPreferences = getSharedPreferences("GAYMERLIST", MODE_PRIVATE);
