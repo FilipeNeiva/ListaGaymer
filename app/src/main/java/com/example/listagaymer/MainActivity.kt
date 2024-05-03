@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.fragment_main)
         val navBottom: BottomNavigationView = binding.bottomViewMain
+        val fab: FloatingActionButton = binding.fab
         navBottom.setupWithNavController(navController)
 
         navBottom.setOnItemSelectedListener { item ->
@@ -36,6 +38,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.intentGameFragment -> navController.navigate(R.id.intentGameFragment)
             }
             true
+        }
+
+        fab.setOnClickListener{
+
         }
 
 //        binding.logoutButton.setOnClickListener{ logout() }
