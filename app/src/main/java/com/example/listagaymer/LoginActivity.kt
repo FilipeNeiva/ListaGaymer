@@ -22,8 +22,6 @@ class LoginActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener{
             if (login(username.text.toString(), password.text.toString(), this)) {
                 finish()
-            } else {
-
             }
         }
 

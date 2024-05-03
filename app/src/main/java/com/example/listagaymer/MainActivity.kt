@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         if(!isLogged()) logout()
 
-        binding.logoutButton.setOnClickListener{ logout() }
+//        binding.logoutButton.setOnClickListener{ logout() }
     }
 
     private fun isLogged(): Boolean {
