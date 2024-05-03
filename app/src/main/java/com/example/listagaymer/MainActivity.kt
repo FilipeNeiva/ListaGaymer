@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         fab.setOnClickListener{
-
+            navController.navigate(R.id.addGameFragment)
         }
 
 //        binding.logoutButton.setOnClickListener{ logout() }

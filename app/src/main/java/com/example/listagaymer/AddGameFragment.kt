@@ -5,17 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.listagaymer.databinding.FragmentDoneGameBinding
+import com.example.listagaymer.databinding.FragmentAddGameBinding
 
-class DoneGameFragment : Fragment() {
+class AddGameFragment : Fragment() {
 
-    private lateinit var binding: FragmentDoneGameBinding
+    private lateinit var binding: FragmentAddGameBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDoneGameBinding.inflate(layoutInflater, container, false)
+        binding = FragmentAddGameBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 }
