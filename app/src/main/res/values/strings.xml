@@ -10,18 +10,10 @@
     <string name="email_placeholder">E-mail</string>
     <string name="repeat_password_placeholder">Repita a senha</string>
     <string name="register_placeholder">Cadastrar</string>
-    <string name="title_activity_login2">LoginActivity2</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="menu_gaming">Jogando</string>
     <string name="menu_finish">Finalizados</string>
     <string name="menu_intent">Pretendo Jogar</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
