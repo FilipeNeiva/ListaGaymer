@@ -2,9 +2,6 @@ package com.example.listagaymer
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -15,10 +12,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val db = DataBaseGaymerList(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         openOrCreateDatabase("GAYMERLIST", MODE_PRIVATE, null)
+        val db = DataBaseGaymerList(applicationContext)
 
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -26,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         if(!isLogged()) logout()
 
+        val fab: FloatingActionButton = binding.fab
         val navController = findNavController(R.id.fragment_main)
         val navBottom: BottomNavigationView = binding.bottomViewMain
         navBottom.setupWithNavController(navController)
@@ -37,6 +35,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.intentGameFragment -> navController.navigate(R.id.intentGameFragment)
             }
             true
+        }
+
+        fab.setOnClickListener{
+            val intent = Intent(this, AddGameActivity::class.java)
+            startActivity(intent)
         }
 
 //        binding.logoutButton.setOnClickListener{ logout() }

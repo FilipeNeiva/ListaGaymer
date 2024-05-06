@@ -30,3 +30,16 @@ fun login(username: String, password: String, context: Context): Boolean {
         return true
     }
 }
+
+fun getUserData(context: Context): User? {
+    val db = DataBaseGaymerList(context)
+
+    val sharedPreferences = context.getSharedPreferences("GAYMERLIST", AppCompatActivity.MODE_PRIVATE);
+    val username = sharedPreferences.getString("USER", "")
+
+    if (username != null) {
+        val user = db.getUser(username)
+        return user
+    }
+    return null
+}

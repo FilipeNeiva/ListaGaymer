@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.marginBottom
 import androidx.core.view.setMargins
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.listagaymer.databinding.FragmentPlayingBinding
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,11 +32,10 @@ class PlayingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fab: FloatingActionButton = binding.fab
+//        binding.playingRecycler.layoutManager = LinearLayoutManager(context)
+    }
 
-        fab.setOnClickListener{
-            val intent = Intent(requireContext(), AddGameActivity::class.java)
-            requireContext().startActivity(intent)
-        }
+    override fun onResume() {
+        super.onResume()
     }
 }
