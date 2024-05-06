@@ -25,7 +25,7 @@ class DataBaseGaymerList(context: Context): SQLiteOpenHelper(context, DataBaseGa
         }
     }
 
-    fun addUser(user: User): User? {
+    fun addUser(user: User): User {
         val db = this.writableDatabase
 
         val values = ContentValues().apply {
@@ -68,7 +68,7 @@ class DataBaseGaymerList(context: Context): SQLiteOpenHelper(context, DataBaseGa
         return users.first()
     }
 
-    fun addGame(game: Game): Game? {
+    fun addGame(game: Game): Game {
         val db = this.writableDatabase
 
         val values = ContentValues().apply {

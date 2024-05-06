@@ -24,7 +24,8 @@
             android:id="@+id/main_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="?actionBarSize" >
+            android:layout_marginBottom="?actionBarSize"
+            tools:ignore="UselessParent">
 
             <include layout="@layout/content_main" />
 
@@ -34,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:layout_margin="16dp"
-                android:contentDescription="Adicionar Jogo"
+                android:contentDescription="@string/add_game"
                 android:src="@drawable/baseline_add_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

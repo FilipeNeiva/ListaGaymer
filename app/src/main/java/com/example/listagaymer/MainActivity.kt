@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         openOrCreateDatabase("GAYMERLIST", MODE_PRIVATE, null)
-        val db = DataBaseGaymerList(applicationContext)
+        DataBaseGaymerList(applicationContext)
 
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

@@ -16,4 +16,7 @@
     <string name="menu_finish">Finalizados</string>
     <string name="menu_intent">Pretendo Jogar</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Nome</string>
+    <string name="add">Adicionar</string>
+    <string name="add_game">Adicionar Jogo</string>
 </resources>
