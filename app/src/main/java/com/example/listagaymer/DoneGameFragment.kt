@@ -1,15 +1,22 @@
 package com.example.listagaymer
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.listagaymer.adapter.GameListAdapter
+import com.example.listagaymer.data.Game
+import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.FragmentDoneGameBinding
 
 class DoneGameFragment : Fragment() {
 
     private lateinit var binding: FragmentDoneGameBinding
+    private lateinit var adapter: GameListAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -17,5 +24,27 @@ class DoneGameFragment : Fragment() {
     ): View? {
         binding = FragmentDoneGameBinding.inflate(layoutInflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.apply {
+            doneGameRecycler.setHasFixedSize(true)
+            doneGameRecycler.layoutManager = LinearLayoutManager(activity)
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val db = DataBaseGaymerList(requireContext().applicationContext)
+
+        val user = getUserData(requireContext())
+        var games: List<Game> = emptyList()
+        if (user != null){ games = db.getGames(user.username, "Finalizado") }
+
+        adapter = GameListAdapter(requireActivity(), games)
+        binding.doneGameRecycler.adapter = adapter
     }
 }

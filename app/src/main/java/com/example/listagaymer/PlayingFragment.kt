@@ -33,7 +33,6 @@ class PlayingFragment : Fragment() {
             playingRecycler.layoutManager = LinearLayoutManager(activity)
         }
 
-//        binding.playingRecycler.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onResume() {
@@ -46,7 +45,5 @@ class PlayingFragment : Fragment() {
 
         adapter = GameListAdapter(requireActivity(), games)
         binding.playingRecycler.adapter = adapter
-
-        Log.i("GAMES", games.toString())
     }
 }
