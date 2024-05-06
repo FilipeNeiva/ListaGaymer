@@ -84,6 +84,32 @@ class DataBaseGaymerList(context: Context): SQLiteOpenHelper(context, DataBaseGa
         return game
     }
 
+    fun getGames(username: String, status: String): List<Game> {
+        val db = this.readableDatabase
+        var games : Array<Game> = emptyArray()
+        val cursor = db.rawQuery("""
+            SELECT * FROM GAME WHERE USER = '$username' AND STATUS = '$status'
+        """.trimIndent(), null)
+
+        with (cursor) {
+            while (moveToNext()) {
+                games += arrayOf(
+                    Game(
+                        getInt(getColumnIndexOrThrow("ID")),
+                        getString(getColumnIndexOrThrow("NAME")),
+                        getString(getColumnIndexOrThrow("STATUS")),
+                        getString(getColumnIndexOrThrow("RATE")),
+                        getString(getColumnIndexOrThrow("USER")),
+                    )
+                )
+            }
+        }
+
+        db.close()
+
+        return games.toList()
+    }
+
     fun removeGame(game: Game) {
         try {
             val db = this.writableDatabase

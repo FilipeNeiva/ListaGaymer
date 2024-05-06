@@ -1,25 +1,21 @@
 package com.example.listagaymer
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.RelativeLayout
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginBottom
-import androidx.core.view.setMargins
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.listagaymer.adapter.GameListAdapter
+import com.example.listagaymer.data.Game
+import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.FragmentPlayingBinding
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class PlayingFragment : Fragment() {
 
     private lateinit var binding: FragmentPlayingBinding
+    private lateinit var adapter: GameListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,10 +28,25 @@ class PlayingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+            playingRecycler.setHasFixedSize(true)
+            playingRecycler.layoutManager = LinearLayoutManager(activity)
+        }
+
 //        binding.playingRecycler.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onResume() {
         super.onResume()
+        val db = DataBaseGaymerList(requireContext().applicationContext)
+
+        val user = getUserData(requireContext())
+        var games: List<Game> = emptyList()
+        if (user != null){ games = db.getGames(user.username, "Jogando") }
+
+        adapter = GameListAdapter(requireActivity(), games)
+        binding.playingRecycler.adapter = adapter
+
+        Log.i("GAMES", games.toString())
     }
 }

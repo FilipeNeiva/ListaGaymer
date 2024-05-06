@@ -19,7 +19,7 @@ class AddGameActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val dropdown: Spinner = binding.gameStatusSpinner
-        val items = arrayOf("Jogando", "Jogados", "Pretendo jogar")
+        val items = arrayOf("Jogando", "Finalizado", "Pretendo jogar")
         val adapter = ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, items)
         val add = binding.addGameBtn
         val nameElement = binding.gameName
