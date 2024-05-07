@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/name"
             android:autofillHints=""
+            android:singleLine="true"
             tools:ignore="TextFields" />
 
         <Spinner

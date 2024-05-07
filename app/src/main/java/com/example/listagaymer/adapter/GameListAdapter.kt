@@ -1,5 +1,5 @@
 package com.example.listagaymer.adapter
-
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -42,9 +42,16 @@ class GameListAdapter(var context: Context, var games: List<Game>) :
 
         holder.removeGameBtn.setOnClickListener {
             val db = DataBaseGaymerList(context)
-            db.removeGame(games[position])
+            db.removeGame(games[holder.adapterPosition])
             db.close()
+            removeAt(holder.adapterPosition)
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun removeAt(position: Int) {
+        games = games.drop(position)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
