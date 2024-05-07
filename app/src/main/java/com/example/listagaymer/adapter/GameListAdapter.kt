@@ -13,7 +13,7 @@ import com.example.listagaymer.databinding.GameListAdapterBinding
 
 class GameListAdapter(var context: Context, var games: List<Game>) :
     RecyclerView.Adapter<GameListAdapter.ItemViewHolder>() {
-         private var listGames: MutableList<Game> = if (games.size > 0) games as MutableList<Game> else mutableListOf<Game>()
+         private var listGames: MutableList<Game> = if (games.isNotEmpty()) games as MutableList<Game> else mutableListOf<Game>()
 
     inner class ItemViewHolder(private val binding: GameListAdapterBinding) :
         RecyclerView.ViewHolder(binding.root) {
