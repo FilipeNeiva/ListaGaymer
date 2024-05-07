@@ -1,4 +1,5 @@
 package com.example.listagaymer.adapter
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,14 +13,16 @@ import com.example.listagaymer.databinding.GameListAdapterBinding
 
 class GameListAdapter(var context: Context, var games: List<Game>) :
     RecyclerView.Adapter<GameListAdapter.ItemViewHolder>() {
+         private var listGames: MutableList<Game> = if (games.size > 0) games as MutableList<Game> else mutableListOf<Game>()
 
     inner class ItemViewHolder(private val binding: GameListAdapterBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val gameNameElement: TextView
         val removeGameBtn: ImageButton
 
-        fun bind(game: Game?) {
+        fun bind(game: Game?, index: Int) {
             binding.gameName.text = game?.name
+            removeGameBtn.setOnClickListener{ deleteGame(index) }
         }
 
         init {
@@ -38,24 +41,21 @@ class GameListAdapter(var context: Context, var games: List<Game>) :
     }
 
     override fun onBindViewHolder(holder: GameListAdapter.ItemViewHolder, position: Int) {
-        holder.bind(games[position])
-
-        holder.removeGameBtn.setOnClickListener {
-            val db = DataBaseGaymerList(context)
-            db.removeGame(games[holder.adapterPosition])
-            db.close()
-            removeAt(holder.adapterPosition)
-        }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun removeAt(position: Int) {
-        games = games.drop(position)
-        notifyDataSetChanged()
+        holder.bind(listGames[position], position)
     }
 
     override fun getItemCount(): Int {
-        return games.size
+        return listGames.size
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun deleteGame(index: Int) {
+        val db = DataBaseGaymerList(context)
+        db.removeGame(listGames[index])
+        db.close()
+
+        listGames.removeAt(index)
+        notifyDataSetChanged()
     }
 }
 
