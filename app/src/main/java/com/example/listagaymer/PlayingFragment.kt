@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.listagaymer.adapter.GameListAdapter
 import com.example.listagaymer.data.Game
@@ -29,7 +30,7 @@ class PlayingFragment : Fragment() {
 
         binding.apply {
             playingRecycler.setHasFixedSize(true)
-            playingRecycler.layoutManager = LinearLayoutManager(activity)
+            playingRecycler.layoutManager = GridLayoutManager(activity, 3)
         }
 
     }
