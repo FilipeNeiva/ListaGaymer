@@ -2,6 +2,7 @@ package com.example.listagaymer.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -11,7 +12,7 @@ import com.example.listagaymer.data.Game
 import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.GameListAdapterBinding
 
-class GameListAdapter(var context: Context, var games: List<Game>) :
+class GameListAdapter(var context: Context, private var games: List<Game>) :
     RecyclerView.Adapter<GameListAdapter.ItemViewHolder>() {
          private var listGames: MutableList<Game> = if (games.isNotEmpty()) games as MutableList<Game> else mutableListOf<Game>()
 
@@ -20,9 +21,13 @@ class GameListAdapter(var context: Context, var games: List<Game>) :
         val gameNameElement: TextView
         val removeGameBtn: ImageButton
 
-        fun bind(game: Game?, index: Int) {
+        fun bind(game: Game?) {
             binding.gameName.text = game?.name
-            removeGameBtn.setOnClickListener{ deleteGame(index) }
+            removeGameBtn.setOnClickListener{
+                if (game != null) {
+                    deleteGame(game)
+                }
+            }
         }
 
         init {
@@ -41,7 +46,7 @@ class GameListAdapter(var context: Context, var games: List<Game>) :
     }
 
     override fun onBindViewHolder(holder: GameListAdapter.ItemViewHolder, position: Int) {
-        holder.bind(listGames[position], position)
+        holder.bind(listGames[position])
     }
 
     override fun getItemCount(): Int {
@@ -49,13 +54,19 @@ class GameListAdapter(var context: Context, var games: List<Game>) :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun deleteGame(index: Int) {
+    fun deleteGame(game: Game) {
+
         val db = DataBaseGaymerList(context)
-        db.removeGame(listGames[index])
+        db.removeGame(game)
         db.close()
 
-        listGames.removeAt(index)
-        notifyDataSetChanged()
+        try {
+            listGames.remove(game)
+            notifyDataSetChanged()
+        } catch (e: Exception) {
+            listGames = mutableListOf<Game>()
+            notifyDataSetChanged()
+        }
     }
 }
 
