@@ -21,8 +21,13 @@ class GameListAdapter(var context: Context, private var games: List<Game>) :
         val gameNameElement: TextView
         val removeGameBtn: ImageButton
 
+        @SuppressLint("SetTextI18n")
         fun bind(game: Game?) {
-            binding.gameName.text = game?.name
+            if (game != null) {
+                if (game.name.length > 6 ) {
+                    binding.gameName.text = "${game.name.substring(0, 5)}..."
+                } else binding.gameName.text = game.name
+            }
             removeGameBtn.setOnClickListener{
                 if (game != null) {
                     deleteGame(game)
