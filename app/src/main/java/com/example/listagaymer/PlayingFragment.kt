@@ -30,7 +30,7 @@ class PlayingFragment : Fragment() {
 
         binding.apply {
             playingRecycler.setHasFixedSize(true)
-            playingRecycler.layoutManager = GridLayoutManager(activity, 3)
+            playingRecycler.layoutManager = GridLayoutManager(activity, 2)
         }
 
     }

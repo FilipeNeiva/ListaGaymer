@@ -31,7 +31,7 @@ class DoneGameFragment : Fragment() {
 
         binding.apply {
             doneGameRecycler.setHasFixedSize(true)
-            doneGameRecycler.layoutManager = GridLayoutManager(activity, 3)
+            doneGameRecycler.layoutManager = GridLayoutManager(activity, 2)
         }
 
     }

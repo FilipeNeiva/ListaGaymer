@@ -14,7 +14,8 @@ import com.example.listagaymer.databinding.GameListAdapterBinding
 
 class GameListAdapter(var context: Context, private var games: List<Game>) :
     RecyclerView.Adapter<GameListAdapter.ItemViewHolder>() {
-         private var listGames: MutableList<Game> = if (games.isNotEmpty()) games as MutableList<Game> else mutableListOf<Game>()
+    private var listGames: MutableList<Game> =
+        if (games.isNotEmpty()) games as MutableList<Game> else mutableListOf<Game>()
 
     inner class ItemViewHolder(private val binding: GameListAdapterBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -24,11 +25,9 @@ class GameListAdapter(var context: Context, private var games: List<Game>) :
         @SuppressLint("SetTextI18n")
         fun bind(game: Game?) {
             if (game != null) {
-                if (game.name.length > 6 ) {
-                    binding.gameName.text = "${game.name.substring(0, 5)}..."
-                } else binding.gameName.text = game.name
+                binding.gameName.text = game.name
             }
-            removeGameBtn.setOnClickListener{
+            removeGameBtn.setOnClickListener {
                 if (game != null) {
                     deleteGame(game)
                 }
