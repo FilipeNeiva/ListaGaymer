@@ -2,7 +2,6 @@ package com.example.listagaymer.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -25,7 +24,7 @@ class GameListAdapter(var context: Context, private var games: List<Game>) :
         @SuppressLint("SetTextI18n")
         fun bind(game: Game?) {
             if (game != null) {
-                binding.gameName.text = game.name
+                gameNameElement.text = game.name
             }
             removeGameBtn.setOnClickListener {
                 if (game != null) {

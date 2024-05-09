@@ -23,16 +23,16 @@
     <fragment
         android:id="@+id/playingFragment"
         android:name="com.example.listagaymer.PlayingFragment"
-        android:label="fragment_playing"
+        android:label="Jogando"
         tools:layout="@layout/fragment_playing" />
     <fragment
         android:id="@+id/doneGameFragment"
         android:name="com.example.listagaymer.DoneGameFragment"
-        android:label="fragment_done_game"
+        android:label="Finalizados"
         tools:layout="@layout/fragment_done_game" />
     <fragment
         android:id="@+id/intentGameFragment"
         android:name="com.example.listagaymer.IntentGameFragment"
-        android:label="fragment_intent_game"
+        android:label="Pretendidos"
         tools:layout="@layout/fragment_intent_game" />
 </navigation>

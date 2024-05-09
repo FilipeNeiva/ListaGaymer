@@ -3,7 +3,12 @@ package com.example.listagaymer
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.ActivityMainBinding
@@ -12,6 +17,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         openOrCreateDatabase("GAYMERLIST", MODE_PRIVATE, null)
@@ -24,7 +31,8 @@ class MainActivity : AppCompatActivity() {
         if(!isLogged()) logout()
 
         val fab: FloatingActionButton = binding.fab
-        val navController = findNavController(R.id.fragment_main)
+        val drawerLayout: DrawerLayout = binding.main
+        navController = findNavController(R.id.fragment_main)
         val navBottom: BottomNavigationView = binding.bottomViewMain
         navBottom.setupWithNavController(navController)
 
@@ -42,7 +50,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        binding.logoutButton.setOnClickListener{ logout() }
+        setSupportActionBar(binding.activateToolbar)
+
+
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.playingFragment,
+                R.id.doneGameFragment,
+                R.id.intentGameFragment
+            )
+            , drawerLayout)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        binding.btnLogout.setOnClickListener { logout() }
     }
 
 
@@ -62,5 +82,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
 
         finish()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.fragment_main)
+        return navController.navigateUp(appBarConfiguration)
+                || super.onSupportNavigateUp()
     }
 }

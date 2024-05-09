@@ -14,4 +14,23 @@
         <item name="android:statusBarColor">@color/primary</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <!-- Input Style -->
+<!--    <style name="Input.Primary" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">-->
+<!--        <item name="android:background">@drawable/drawable_input</item>-->
+<!--        <item name="android:padding">10dp</item>-->
+<!--        <item name="android:height">50dp</item>-->
+<!--        <item name="boxStrokeWidth">0dp</item>-->
+<!--        <item name="boxStrokeWidthFocused">0dp</item>-->
+<!--        <item name="boxBackgroundColor">#ffffff</item>-->
+<!--        <item name="hintAnimationEnabled">false</item>-->
+<!--        <item name="hintEnabled">false</item>-->
+<!--        <item name="fontFamily">@font/nunito_bold</item>-->
+<!--        <item name="android:textColor">@color/secondary</item>-->
+<!--        <item name="android:ems">10</item>-->
+<!--    </style>-->
+
+    <style name="Toolbar.Overlay" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="titleCentered">true</item>
+    </style>
 </resources>
