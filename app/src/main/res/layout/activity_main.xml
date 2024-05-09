@@ -111,9 +111,11 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnLogout"
+                style="@style/Button.Primary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
+                android:drawableStart="@drawable/baseline_logout_24"
                 android:drawablePadding="5dp"
                 android:paddingHorizontal="10dp"
                 android:text="Sair" />
