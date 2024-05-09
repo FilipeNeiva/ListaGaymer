@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         if(!isLogged()) logout()
 
+        val user = getUserData(this)
         val fab: FloatingActionButton = binding.fab
         val drawerLayout: DrawerLayout = binding.main
         navController = findNavController(R.id.fragment_main)
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.btnLogout.setOnClickListener { logout() }
+        binding.activateNavMenu.playerName.text = user?.username
     }
 
 
