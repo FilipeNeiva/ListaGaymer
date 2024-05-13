@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.listagaymer.R
 import com.example.listagaymer.data.Game
 import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.GameListAdapterBinding
@@ -14,12 +16,14 @@ import com.example.listagaymer.databinding.GameListAdapterBinding
 class GameListAdapter(var context: Context, private var games: List<Game>) :
     RecyclerView.Adapter<GameListAdapter.ItemViewHolder>() {
     private var listGames: MutableList<Game> =
-        if (games.isNotEmpty()) games as MutableList<Game> else mutableListOf<Game>()
+        if (games.isNotEmpty()) games as MutableList<Game> else mutableListOf()
+    private var listMarkGames: MutableList<Game> = mutableListOf()
 
     inner class ItemViewHolder(private val binding: GameListAdapterBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val gameNameElement: TextView
-        val removeGameBtn: ImageButton
+        private val gameNameElement: TextView = binding.gameName
+        private val removeGameBtn: ImageButton = binding.removeGameBtn
+        private val cardItem: CardView = binding.cardItem
 
         @SuppressLint("SetTextI18n")
         fun bind(game: Game?) {
@@ -31,17 +35,34 @@ class GameListAdapter(var context: Context, private var games: List<Game>) :
                     deleteGame(game)
                 }
             }
+
+            cardItem.setOnLongClickListener {
+                if (game != null && listMarkGames.isEmpty()) {
+                    toogleGame(game)
+                }
+                true
+            }
+
+            cardItem.setOnClickListener {
+                game?.let { item ->
+                    if (listMarkGames.isNotEmpty()) toogleGame(
+                        item
+                    )
+                }
+            }
         }
 
-        init {
-            gameNameElement = binding.gameName
-            removeGameBtn = binding.removeGameBtn
+        @SuppressLint("NotifyDataSetChanged")
+        private fun toogleGame(game: Game) {
+            if (listMarkGames.contains(game)) listMarkGames.remove(game)
+            else listMarkGames.add(game)
+            notifyDataSetChanged()
         }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): GameListAdapter.ItemViewHolder {
         val binding =
             GameListAdapterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -49,7 +70,10 @@ class GameListAdapter(var context: Context, private var games: List<Game>) :
     }
 
     override fun onBindViewHolder(holder: GameListAdapter.ItemViewHolder, position: Int) {
-        holder.bind(listGames[position])
+        val game = listGames[position]
+        holder.bind(game)
+        if (listMarkGames.contains(game)) holder.itemView.setBackgroundResource(R.drawable.item_selected)
+        else holder.itemView.setBackgroundResource(R.drawable.item_card)
     }
 
     override fun getItemCount(): Int {
@@ -67,7 +91,7 @@ class GameListAdapter(var context: Context, private var games: List<Game>) :
             listGames.remove(game)
             notifyDataSetChanged()
         } catch (e: Exception) {
-            listGames = mutableListOf<Game>()
+            listGames = mutableListOf()
             notifyDataSetChanged()
         }
     }

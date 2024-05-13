@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_item"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="180dp"
     android:layout_height="wrap_content"
     android:layout_margin="10dp">
@@ -19,7 +21,8 @@
             android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/remove_game_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/remove_game_btn"
+            tools:ignore="HardcodedText" />
 
         <ImageButton
             android:id="@+id/remove_game_btn"
