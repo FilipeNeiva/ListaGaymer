@@ -15,17 +15,58 @@
             android:id="@+id/activate_main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:elevation="2dp"
             android:fitsSystemWindows="true"
-            app:layout_constraintTop_toTopOf="parent"
-            android:elevation="2dp">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/activate_toolbar"
-                android:theme="@style/Toolbar.Overlay"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:titleTextColor="@color/white"
-                android:background="@color/primary"/>
+                android:background="@color/primary"
+                android:theme="@style/Toolbar.Overlay"
+                app:titleTextColor="@color/white">
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="5dp">
+
+                    <ImageView
+                        android:id="@+id/btn_check_items"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:contentDescription="Botão finalizar"
+                        android:padding="2dp"
+                        android:src="@drawable/baseline_check_24"
+                        app:tint="@color/teal_200"
+                        tools:ignore="HardcodedText"
+                        android:visibility="invisible"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_gravity="end">
+
+                    <ImageView
+                        android:id="@+id/btn_delete_items"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:contentDescription="Botão finalizar"
+                        android:padding="2dp"
+                        android:src="@drawable/baseline_trash_24"
+                        app:tint="@color/danger"
+                        tools:ignore="HardcodedText"
+                        android:visibility="invisible"/>
+                </RelativeLayout>
+            </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -38,8 +79,8 @@
                 android:id="@+id/main_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="?actionBarSize"
                 android:layout_marginTop="?actionBarSize"
+                android:layout_marginBottom="?actionBarSize"
                 tools:ignore="UselessParent">
 
                 <include layout="@layout/content_main" />

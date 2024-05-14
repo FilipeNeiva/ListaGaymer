@@ -13,13 +13,13 @@ import com.example.listagaymer.data.Game
 import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.GameListAdapterBinding
 
-class GameListAdapter(var context: Context, private var games: List<Game>) :
+class GameListAdapter(var context: Context, games: List<Game>) :
     RecyclerView.Adapter<GameListAdapter.ItemViewHolder>() {
     private var listGames: MutableList<Game> =
         if (games.isNotEmpty()) games as MutableList<Game> else mutableListOf()
     private var listMarkGames: MutableList<Game> = mutableListOf()
 
-    inner class ItemViewHolder(private val binding: GameListAdapterBinding) :
+    inner class ItemViewHolder(binding: GameListAdapterBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val gameNameElement: TextView = binding.gameName
         private val removeGameBtn: ImageButton = binding.removeGameBtn
@@ -38,32 +38,28 @@ class GameListAdapter(var context: Context, private var games: List<Game>) :
 
             cardItem.setOnLongClickListener {
                 if (game != null && listMarkGames.isEmpty()) {
-                    toogleGame(game)
+                    toggleGame(game)
                 }
                 true
             }
 
             cardItem.setOnClickListener {
                 game?.let { item ->
-                    if (listMarkGames.isNotEmpty()) toogleGame(
-                        item
-                    )
+                    if (listMarkGames.isNotEmpty())
+                        toggleGame(item)
                 }
             }
         }
 
         @SuppressLint("NotifyDataSetChanged")
-        private fun toogleGame(game: Game) {
+        private fun toggleGame(game: Game) {
             if (listMarkGames.contains(game)) listMarkGames.remove(game)
             else listMarkGames.add(game)
             notifyDataSetChanged()
         }
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int,
-    ): GameListAdapter.ItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameListAdapter.ItemViewHolder {
         val binding =
             GameListAdapterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding)

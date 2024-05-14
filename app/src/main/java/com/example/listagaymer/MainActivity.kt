@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (name.length < 2) {
-            Toast.makeText(this, "o nome deve ter mais de 2 caracters", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "o nome deve ter mais de 2 caracteres", Toast.LENGTH_LONG).show()
             return false
         }
 
