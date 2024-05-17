@@ -38,8 +38,7 @@ fun getUserData(context: Context): User? {
     val username = sharedPreferences.getString("USER", "")
 
     if (username != null) {
-        val user = db.getUser(username)
-        return user
+        return db.getUser(username)
     }
     return null
 }

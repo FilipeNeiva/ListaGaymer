@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -25,62 +25,21 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/primary"
                 android:theme="@style/Toolbar.Overlay"
-                app:titleTextColor="@color/white">
-
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="5dp">
-
-                    <ImageView
-                        android:id="@+id/btn_check_items"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start"
-                        android:contentDescription="Botão finalizar"
-                        android:padding="2dp"
-                        android:src="@drawable/baseline_check_24"
-                        app:tint="@color/teal_200"
-                        tools:ignore="HardcodedText"
-                        android:visibility="invisible"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_gravity="end">
-
-                    <ImageView
-                        android:id="@+id/btn_delete_items"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start"
-                        android:contentDescription="Botão finalizar"
-                        android:padding="2dp"
-                        android:src="@drawable/baseline_trash_24"
-                        app:tint="@color/danger"
-                        tools:ignore="HardcodedText"
-                        android:visibility="invisible"/>
-                </RelativeLayout>
-            </com.google.android.material.appbar.MaterialToolbar>
+                app:titleTextColor="@color/white" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/activate_main_toolbar"
+            app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout">
 
             <FrameLayout
                 android:id="@+id/main_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="?actionBarSize"
-                android:layout_marginBottom="?actionBarSize"
                 tools:ignore="UselessParent">
 
                 <include layout="@layout/content_main" />
@@ -103,7 +62,8 @@
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <com.google.android.material.bottomappbar.BottomAppBar
                 android:id="@+id/bottom_view_content"
@@ -123,7 +83,7 @@
 
             </com.google.android.material.bottomappbar.BottomAppBar>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_drawer"
@@ -159,7 +119,7 @@
                 android:drawableStart="@drawable/baseline_logout_24"
                 android:drawablePadding="5dp"
                 android:paddingHorizontal="10dp"
-                android:text="Sair" />
+                android:text="@string/sair" />
 
             <TextView
                 android:id="@+id/appVersion"

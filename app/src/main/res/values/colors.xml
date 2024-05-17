@@ -12,5 +12,6 @@
     <color name="gray_200">#D9D9D9</color>
     <color name="gray_300">#CECECE</color>
     <color name="gray_600">#727779</color>
-    <color name="danger">#F11B1B</color>
+    <color name="danger">#F85252</color>
+    <color name="success">#56B341</color>
 </resources>

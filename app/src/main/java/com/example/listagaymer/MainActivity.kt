@@ -7,6 +7,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.view.ActionMode
+import android.view.Menu
+import android.view.MenuItem
 import android.view.Window
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -32,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
+    private var actionMode: ActionMode? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         openOrCreateDatabase("GAYMERLIST", MODE_PRIVATE, null)
@@ -59,10 +63,15 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        fab.setOnClickListener { dialogFacture(this) }
-
         setSupportActionBar(binding.activateToolbar)
 
+        //fab.setOnClickListener { dialogFacture(this) }
+        fab.setOnClickListener {
+            if (actionMode == null) {
+                actionMode = startSupportActionMode(callback)
+                supportActionBar?.hide()
+            }
+        }
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -161,5 +170,37 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.fragment_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    private val callback: ActionMode.Callback = object : ActionMode.Callback {
+        override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+            if (mode != null) {
+                mode.menuInflater.inflate(R.menu.toolbar_menu, menu)
+                mode.title = "Ações"
+            }
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+            return false
+        }
+
+        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem): Boolean {
+            when (item.itemId) {
+                R.id.check_item -> {
+
+                }
+                R.id.delete_item -> {
+
+                }
+            }
+            return false
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode?) {
+            actionMode = null
+            supportActionBar?.show()
+        }
+
     }
 }

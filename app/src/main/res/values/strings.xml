@@ -20,4 +20,5 @@
     <string name="add">Adicionar</string>
     <string name="add_game">Adicionar Jogo</string>
     <string name="excluir_jogo">Excluir jogo</string>
+    <string name="sair">Sair</string>
 </resources>
