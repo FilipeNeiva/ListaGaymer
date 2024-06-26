@@ -1,4 +1,4 @@
-package com.example.listagaymer.adapter
+package com.example.listagaymer.ui.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -59,13 +59,13 @@ class GameListAdapter(var context: Context, games: List<Game>) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameListAdapter.ItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val binding =
             GameListAdapterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: GameListAdapter.ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val game = listGames[position]
         holder.bind(game)
         if (listMarkGames.contains(game)) holder.itemView.setBackgroundResource(R.drawable.item_selected)

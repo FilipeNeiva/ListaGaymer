@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.listagaymer.adapter.GameListAdapter
+import com.example.listagaymer.ui.adapter.GameListAdapter
 import com.example.listagaymer.data.Game
 import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.FragmentIntentGameBinding
