@@ -7,32 +7,32 @@
 
     <activity
         android:id="@+id/accountCreateActivity"
-        android:name="com.example.listagaymer.AccountCreateActivity"
+        android:name="com.example.listagaymer.ui.activity.AccountCreateActivity"
         android:label="activity_account_create"
         tools:layout="@layout/activity_account_create" />
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.example.listagaymer.MainActivity"
+        android:name="com.example.listagaymer.ui.activity.GameListActivity"
         android:label="activity_main"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/activity_game_list" />
     <activity
         android:id="@+id/loginActivity"
-        android:name="com.example.listagaymer.LoginActivity"
+        android:name="com.example.listagaymer.ui.activity.LoginActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_login" />
     <fragment
         android:id="@+id/playingFragment"
-        android:name="com.example.listagaymer.PlayingFragment"
+        android:name="com.example.listagaymer.ui.fragment.PlayingFragment"
         android:label="Jogando"
         tools:layout="@layout/fragment_playing" />
     <fragment
         android:id="@+id/doneGameFragment"
-        android:name="com.example.listagaymer.DoneGameFragment"
+        android:name="com.example.listagaymer.ui.fragment.DoneGameFragment"
         android:label="Finalizados"
         tools:layout="@layout/fragment_done_game" />
     <fragment
         android:id="@+id/intentGameFragment"
-        android:name="com.example.listagaymer.IntentGameFragment"
+        android:name="com.example.listagaymer.ui.fragment.IntentGameFragment"
         android:label="Pretendidos"
         tools:layout="@layout/fragment_intent_game" />
 </navigation>

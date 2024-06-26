@@ -1,4 +1,4 @@
-package com.example.listagaymer
+package com.example.listagaymer.ui.activity
 
 import android.app.Dialog
 import android.content.Context
@@ -25,14 +25,18 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.listagaymer.R
 import com.example.listagaymer.data.Game
 import com.example.listagaymer.database.DataBaseGaymerList
-import com.example.listagaymer.databinding.ActivityMainBinding
+import com.example.listagaymer.databinding.ActivityGameListBinding
+import com.example.listagaymer.getUserData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class GameListActivity : AppCompatActivity() {
+    private val binding by lazy {
+        ActivityGameListBinding.inflate(layoutInflater)
+    }
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private var actionMode: ActionMode? = null
@@ -42,7 +46,6 @@ class MainActivity : AppCompatActivity() {
         DataBaseGaymerList(applicationContext)
 
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         if (!isLogged()) logout()
@@ -190,6 +193,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.check_item -> {
 
                 }
+
                 R.id.delete_item -> {
 
                 }

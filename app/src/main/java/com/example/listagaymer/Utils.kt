@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.listagaymer.data.User
 import com.example.listagaymer.database.DataBaseGaymerList
+import com.example.listagaymer.ui.activity.GameListActivity
+
 fun login(username: String, password: String, context: Context): Boolean {
     val db = DataBaseGaymerList(context)
 
@@ -24,7 +26,7 @@ fun login(username: String, password: String, context: Context): Boolean {
         editor.apply()
 
         //mandar pra main activity
-        val intent = Intent(context, MainActivity::class.java)
+        val intent = Intent(context, GameListActivity::class.java)
         context.startActivity(intent)
 
         return true

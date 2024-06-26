@@ -1,10 +1,11 @@
-package com.example.listagaymer
+package com.example.listagaymer.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.ActivityLoginBinding
+import com.example.listagaymer.login
 
 
 class LoginActivity : AppCompatActivity() {

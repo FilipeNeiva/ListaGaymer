@@ -12,17 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ListaGaymer"
         tools:targetApi="31">
+        <activity android:name=".ui.activity.LoginActivity" />
+        <activity android:name=".ui.activity.AccountCreateActivity" />
         <activity
-            android:name=".AddGameActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true" />
-        <activity
-            android:name=".AccountCreateActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".ui.activity.GameListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

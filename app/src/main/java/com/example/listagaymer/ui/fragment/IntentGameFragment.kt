@@ -1,4 +1,4 @@
-package com.example.listagaymer
+package com.example.listagaymer.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import com.example.listagaymer.adapter.GameListAdapter
 import com.example.listagaymer.data.Game
 import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.FragmentIntentGameBinding
+import com.example.listagaymer.getUserData
 
 class IntentGameFragment : Fragment() {
 

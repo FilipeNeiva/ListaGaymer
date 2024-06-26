@@ -1,4 +1,4 @@
-package com.example.listagaymer
+package com.example.listagaymer.ui.activity
 
 import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.listagaymer.data.User
 import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.ActivityAccountCreateBinding
+import com.example.listagaymer.login
 
 
 class AccountCreateActivity : AppCompatActivity() {
