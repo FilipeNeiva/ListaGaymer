@@ -3,37 +3,57 @@ package com.example.listagaymer.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.listagaymer.database.DataBaseGaymerList
+import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.lifecycleScope
+import com.example.listagaymer.database.AppDatabase
 import com.example.listagaymer.databinding.ActivityLoginBinding
-import com.example.listagaymer.login
+import com.example.listagaymer.extentions.goTo
+import com.example.listagaymer.preferences.LoggedPlayerPreferences
+import com.example.listagaymer.preferences.dataStore
+import com.example.listagaymer.extentions.toast
+import kotlinx.coroutines.launch
 
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLoginBinding
-    private val db = DataBaseGaymerList(this)
+
+    private val binding by lazy {
+        ActivityLoginBinding.inflate(layoutInflater)
+    }
+
+    private val playerDao by lazy {
+        AppDatabase.instance(this).playerDao()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        makeAccountCreateButton()
+        makeLoginButton()
+    }
 
-        val username = binding.userTextInput
-        val password = binding.passwordTextInput
+    private fun makeLoginButton() {
+        val username = binding.userTextInput.text.toString()
+        val password = binding.passwordTextInput.text.toString()
 
-        binding.loginButton.setOnClickListener{
-            if (login(username.text.toString(), password.text.toString(), this)) {
-                finish()
+        binding.loginButton.setOnClickListener {
+            lifecycleScope.launch {
+                playerDao.authenticate(username, password)?.let { player ->
+                    dataStore.edit { preferences ->
+                        preferences[LoggedPlayerPreferences] = player.username
+                    }
+                    goTo(GameListActivity::class.java) {
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    }
+                } ?: toast("Falha na autentificação")
+
             }
         }
+    }
 
-        binding.newAccountText.setOnClickListener{
+    private fun makeAccountCreateButton() {
+        binding.newAccountText.setOnClickListener {
             binding.newAccountText.isEnabled = false
-            val myIntent = Intent(
-                this,
-                AccountCreateActivity::class.java
-            )
-
-            this.startActivity(myIntent)
+            goTo(AccountCreateActivity::class.java)
         }
     }
 

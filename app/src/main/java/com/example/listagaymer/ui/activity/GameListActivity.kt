@@ -1,24 +1,17 @@
 package com.example.listagaymer.ui.activity
 
 import android.app.Dialog
-import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.Window
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.AppCompatButton
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -26,33 +19,74 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.listagaymer.R
-import com.example.listagaymer.data.Game
-import com.example.listagaymer.database.DataBaseGaymerList
+import com.example.listagaymer.database.AppDatabase
 import com.example.listagaymer.databinding.ActivityGameListBinding
-import com.example.listagaymer.getUserData
+import com.example.listagaymer.extentions.toast
+import com.example.listagaymer.model.Game
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.launch
 
-class GameListActivity : AppCompatActivity() {
+class GameListActivity : PlayerBaseActivity() {
     private val binding by lazy {
         ActivityGameListBinding.inflate(layoutInflater)
     }
+    private val gameDao by lazy {
+        AppDatabase.instance(this).gameDao()
+    }
+
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
-    private var actionMode: ActionMode? = null
+
+    //    private var actionMode: ActionMode? = null
+    private var dialog = Dialog(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        openOrCreateDatabase("GAYMERLIST", MODE_PRIVATE, null)
-        DataBaseGaymerList(applicationContext)
-
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        dialogAddGameFactory()
+        makeAddGameButton()
+        makeNavBarNavigation()
+        makeAppBarConfiguration()
 
-        if (!isLogged()) logout()
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        val user = getUserData(this)
-        val fab: FloatingActionButton = binding.fab
+        logoutButtonConfiguration()
+        namePlayerDrawerSetup()
+    }
+
+    private fun namePlayerDrawerSetup() {
+        lifecycleScope.launch {
+            player.collect { player ->
+                player?.let {
+                    binding.activateNavMenu.playerName.text = it.username
+                }
+            }
+        }
+    }
+
+    private fun logoutButtonConfiguration() {
+        binding.btnLogout.setOnClickListener {
+            lifecycleScope.launch {
+                logoutPlayer()
+            }
+        }
+    }
+
+    private fun makeAppBarConfiguration() {
         val drawerLayout: DrawerLayout = binding.main
+
+        setSupportActionBar(binding.activateToolbar)
+
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.playingFragment,
+                R.id.doneGameFragment,
+                R.id.intentGameFragment
+            ), drawerLayout
+        )
+    }
+
+    private fun makeNavBarNavigation() {
         navController = findNavController(R.id.fragment_main)
         val navBottom: BottomNavigationView = binding.bottomViewMain
         navBottom.setupWithNavController(navController)
@@ -65,32 +99,21 @@ class GameListActivity : AppCompatActivity() {
             }
             true
         }
-
-        setSupportActionBar(binding.activateToolbar)
-
-        //fab.setOnClickListener { dialogFacture(this) }
-        fab.setOnClickListener {
-            if (actionMode == null) {
-                actionMode = startSupportActionMode(callback)
-                supportActionBar?.hide()
-            }
-        }
-
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.playingFragment,
-                R.id.doneGameFragment,
-                R.id.intentGameFragment
-            ), drawerLayout
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
-        binding.btnLogout.setOnClickListener { logout() }
-        binding.activateNavMenu.playerName.text = user?.username
     }
 
-    private fun dialogFacture(context: Context) {
-        val dialog = Dialog(context)
+    private fun makeAddGameButton() {
+        binding.fab.setOnClickListener {
+            dialog.show()
+        }
+//        .setOnClickListener {
+//            if (actionMode == null) {
+//                actionMode = startSupportActionMode(callback)
+//                supportActionBar?.hide()
+//            }
+//        }
+    }
+
+    private fun dialogAddGameFactory() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.modal_add_game)
@@ -103,70 +126,52 @@ class GameListActivity : AppCompatActivity() {
 
         val nameGame = dialog.findViewById<EditText>(R.id.game_name)
         val item =
-            if (navController.currentDestination?.label == "Jogando") 0 else if (navController.currentDestination?.label == "Finalizados") 1 else 2
+            if (navController.currentDestination?.label == "Jogando") 0
+            else if (navController.currentDestination?.label == "Finalizados") 1 else 2
         dropdown.setSelection(item)
 
         dialog.findViewById<Button>(R.id.add_game_btn).setOnClickListener {
             if (isGameValid(nameGame.text.toString(), dropdown.selectedItem.toString())) {
-                addGame(nameGame.text.toString(), dropdown.selectedItem.toString(), dialog)
+                addGame(nameGame.text.toString(), dropdown.selectedItem.toString())
             }
         }
 
         dialog.findViewById<AppCompatButton>(R.id.btn_cancel_new_game).setOnClickListener {
             dialog.dismiss()
         }
-
-        dialog.show()
     }
 
     private fun isGameValid(name: String, status: String): Boolean {
         if (name == "") {
-            Toast.makeText(this, "o nome não pode ser vazio", Toast.LENGTH_SHORT).show()
+            toast("o nome não pode ser vazio")
             return false
         }
 
         if (name.length < 2) {
-            Toast.makeText(this, "o nome deve ter mais de 2 caracteres", Toast.LENGTH_LONG).show()
+            toast("o nome deve ter mais de 2 caracteres")
             return false
         }
 
         return true
     }
 
-    private fun addGame(name: String, status: String, dialog: Dialog) {
-        val user = getUserData(this)
-        val db = DataBaseGaymerList(this)
+    private fun addGame(name: String, status: String) {
+        player.value?.let { player ->
 
-        if (user != null) {
-            val game =
-                Game(name = name, status = status, user = user.username, id = null, rate = null)
-            try {
-                db.addGame(game)
+            val game = Game(
+                name = name,
+                status = status,
+                playerId = player.username,
+                rate = null
+            )
+
+            lifecycleScope.launch {
+                gameDao.create(game)
                 dialog.dismiss()
                 navController.currentDestination?.id?.let { navController.navigate(it) }
-            } catch (e: Exception) {
-                Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                e.message?.let { Log.e("ERRO", it) }
             }
+
         }
-    }
-
-    private fun isLogged(): Boolean {
-        val sharedPreferences = getSharedPreferences("GAYMERLIST", MODE_PRIVATE);
-        val username = sharedPreferences.getString("USER", "")
-        return username != ""
-    }
-
-    private fun logout() {
-        val sharedPreferences = getSharedPreferences("GAYMERLIST", MODE_PRIVATE);
-        val editor = sharedPreferences.edit()
-        editor.remove("USER")
-        editor.apply()
-
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-
-        finish()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -175,36 +180,38 @@ class GameListActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
-    private val callback: ActionMode.Callback = object : ActionMode.Callback {
-        override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-            if (mode != null) {
-                mode.menuInflater.inflate(R.menu.toolbar_menu, menu)
-                mode.title = "Ações"
-            }
-            return true
-        }
+    // tetando fazer action mode
 
-        override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-            return false
-        }
-
-        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem): Boolean {
-            when (item.itemId) {
-                R.id.check_item -> {
-
-                }
-
-                R.id.delete_item -> {
-
-                }
-            }
-            return false
-        }
-
-        override fun onDestroyActionMode(mode: ActionMode?) {
-            actionMode = null
-            supportActionBar?.show()
-        }
-
-    }
+//    private val callback: ActionMode.Callback = object : ActionMode.Callback {
+//        override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+//            if (mode != null) {
+//                mode.menuInflater.inflate(R.menu.toolbar_menu, menu)
+//                mode.title = "Ações"
+//            }
+//            return true
+//        }
+//
+//        override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+//            return false
+//        }
+//
+//        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem): Boolean {
+//            when (item.itemId) {
+//                R.id.check_item -> {
+//
+//                }
+//
+//                R.id.delete_item -> {
+//
+//                }
+//            }
+//            return false
+//        }
+//
+//        override fun onDestroyActionMode(mode: ActionMode?) {
+//            actionMode = null
+//            supportActionBar?.show()
+//        }
+//
+//    }
 }

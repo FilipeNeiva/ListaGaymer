@@ -13,5 +13,14 @@ interface PlayerDao {
     suspend fun create(player: Player)
 
     @Query("SELECT * FROM Player WHERE username = :playerId")
-    fun getPlayerById(playerId: String): Flow<Player>?
+    fun getPlayerById(playerId: String): Flow<Player>
+
+    @Query(
+        """
+        SELECT * FROM Player
+        WHERE username = :username
+        AND password = :password
+    """
+    )
+    suspend fun authenticate(username: String, password: String): Player?
 }

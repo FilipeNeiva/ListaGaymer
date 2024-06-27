@@ -32,7 +32,7 @@ abstract class AppDatabase : RoomDatabase() {
             return Room.databaseBuilder(
                 context,
                 AppDatabase::class.java,
-                ""
+                "com.sulupa.listagaymer"
             ).build().also {
                 db = it
             }

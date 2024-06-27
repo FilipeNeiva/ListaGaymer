@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.listagaymer.ui.adapter.GameListAdapter
 import com.example.listagaymer.data.Game
-import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.FragmentPlayingBinding
 import com.example.listagaymer.getUserData
 

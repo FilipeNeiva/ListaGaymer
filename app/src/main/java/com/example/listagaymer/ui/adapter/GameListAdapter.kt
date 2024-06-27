@@ -10,7 +10,6 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listagaymer.R
 import com.example.listagaymer.data.Game
-import com.example.listagaymer.database.DataBaseGaymerList
 import com.example.listagaymer.databinding.GameListAdapterBinding
 
 class GameListAdapter(var context: Context, games: List<Game>) :

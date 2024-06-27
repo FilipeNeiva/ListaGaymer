@@ -1,79 +1,97 @@
 package com.example.listagaymer.ui.activity
 
+import android.content.Intent
 import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.listagaymer.data.User
-import com.example.listagaymer.database.DataBaseGaymerList
+import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.lifecycleScope
+import com.example.listagaymer.database.AppDatabase
 import com.example.listagaymer.databinding.ActivityAccountCreateBinding
-import com.example.listagaymer.login
+import com.example.listagaymer.extentions.goTo
+import com.example.listagaymer.model.Player
+import com.example.listagaymer.preferences.LoggedPlayerPreferences
+import com.example.listagaymer.preferences.dataStore
+import com.example.listagaymer.extentions.toast
+import kotlinx.coroutines.launch
 
 
 class AccountCreateActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityAccountCreateBinding
-    private val db = DataBaseGaymerList(this)
+    private val binding by lazy {
+        ActivityAccountCreateBinding.inflate(layoutInflater)
+    }
+
+    private val playerDao by lazy {
+        AppDatabase.instance(this).playerDao()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAccountCreateBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-        val username = binding.userTextInput
-        val email = binding.emailTextInput
-        val password = binding.passwordTextInput
-        val repeatPassword = binding.repeatPasswordTextInput
-        val register = binding.registerButton
-
-        register.setOnClickListener{
-            createAcctount(
-                username.text.toString(),
-                email.text.toString(),
-                password.text.toString(),
-                repeatPassword.text.toString()
-            )
-        }
-
+        makeRegisterButton()
     }
 
-    fun createAcctount(username: String, email: String, password: String, repeatPassword: String) {
-        try {
-            if (isValid(username, email, password, repeatPassword)) {
-                db.addUser(User(
-                    username,
-                    email,
-                    password
-                ))
-                if (login(username, password, this)) {
-                    finish()
-                }
+    private fun makeRegisterButton() {
+        binding.registerButton.setOnClickListener {
+            createAcctount()
+        }
+    }
+
+    fun createAcctount() {
+        lifecycleScope.launch {
+            try {
+                val player = getPlayer()
+                playerDao.create(player)
+                playerDao.authenticate(player.username, player.password)?.let { player ->
+                    dataStore.edit { preferences ->
+                        preferences[LoggedPlayerPreferences] = player.username
+                    }
+                    goTo(GameListActivity::class.java) {
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    }
+                } ?: toast("Falha na autentificação")
+            } catch (e: SQLiteConstraintException) {
+                Log.e("ERRO", e.stackTraceToString())
+                toast("Esse usuário já existe!")
+            } catch (e: Exception) {
+                e.message?.let { Log.e("ERRO", it) }
+                e.message?.let { toast(it) }
             }
-        } catch (e: SQLiteConstraintException) {
-            Log.e("ERRO", e.stackTraceToString())
-            Toast.makeText(this, "Esse usuário já existe!", Toast.LENGTH_LONG).show()
-        } catch (e: Exception) {
-            e.message?.let { Log.e("ERRO", it) }
-            e.message?.let { Toast.makeText(this, it, Toast.LENGTH_LONG).show() }
         }
     }
 
-    fun isValid(username: String, email: String, password: String, repeatPassword: String): Boolean {
+    private fun getPlayer(): Player {
+        val username = binding.userTextInput.text.toString()
+        val email = binding.emailTextInput.text.toString()
+        val password = binding.passwordTextInput.text.toString()
+        val repeatPassword = binding.repeatPasswordTextInput.text.toString()
+
+        isValid(username, email, password, repeatPassword)
+        return Player(
+            username = username,
+            email = email,
+            password = password
+        )
+
+    }
+
+    fun isValid(
+        username: String,
+        email: String,
+        password: String,
+        repeatPassword: String
+    ) {
         if (username.length < 4) throw Exception("O nome de usuário deve ter pelo menos 4 caracteres!")
         if (!isValidEmail(email)) throw Exception("Entre com um endereço de e-mail valido!")
         if (password.length < 4) throw Exception("A senha deve ter pelo menos 4 caracteres!")
         if (password != repeatPassword) throw Exception("As senhas não coincidem!")
-        return true
     }
 
     fun isValidEmail(target: CharSequence?): Boolean {
-        return if (TextUtils.isEmpty(target)) {
-            false
-        } else {
+        return target?.let { email ->
             Patterns.EMAIL_ADDRESS.matcher(target).matches()
-        }
+        } ?: false
     }
 }
