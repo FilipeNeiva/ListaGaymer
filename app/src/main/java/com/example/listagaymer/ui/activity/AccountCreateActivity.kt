@@ -11,10 +11,10 @@ import androidx.lifecycle.lifecycleScope
 import com.example.listagaymer.database.AppDatabase
 import com.example.listagaymer.databinding.ActivityAccountCreateBinding
 import com.example.listagaymer.extentions.goTo
+import com.example.listagaymer.extentions.toast
 import com.example.listagaymer.model.Player
 import com.example.listagaymer.preferences.LoggedPlayerPreferences
 import com.example.listagaymer.preferences.dataStore
-import com.example.listagaymer.extentions.toast
 import kotlinx.coroutines.launch
 
 
