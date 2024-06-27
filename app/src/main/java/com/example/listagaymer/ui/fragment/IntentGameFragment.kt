@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.listagaymer.ui.adapter.GameListAdapter
-import com.example.listagaymer.data.Game
 import com.example.listagaymer.databinding.FragmentIntentGameBinding
-import com.example.listagaymer.getUserData
+import com.example.listagaymer.ui.adapter.GameListAdapter
 
 class IntentGameFragment : Fragment() {
 
@@ -34,15 +32,17 @@ class IntentGameFragment : Fragment() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        val db = DataBaseGaymerList(requireContext().applicationContext)
-
-        val user = getUserData(requireContext())
-        var games: List<Game> = emptyList()
-        if (user != null){ games = db.getGames(user.username, "Pretendo jogar") }
-
-        adapter = GameListAdapter(requireActivity(), games)
-        binding.doneGameRecycler.adapter = adapter
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        val db = DataBaseGaymerList(requireContext().applicationContext)
+//
+//        val user = getUserData(requireContext())
+//        var games: List<Game> = emptyList()
+//        if (user != null) {
+//            games = db.getGames(user.username, "Pretendo jogar")
+//        }
+//
+//        adapter = GameListAdapter(requireActivity(), games)
+//        binding.doneGameRecycler.adapter = adapter
+//    }
 }

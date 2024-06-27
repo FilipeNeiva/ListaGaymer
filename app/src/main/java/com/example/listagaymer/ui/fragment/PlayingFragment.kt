@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.listagaymer.ui.adapter.GameListAdapter
-import com.example.listagaymer.data.Game
 import com.example.listagaymer.databinding.FragmentPlayingBinding
-import com.example.listagaymer.getUserData
+import com.example.listagaymer.ui.activity.PlayerBaseActivity
+import com.example.listagaymer.ui.adapter.GameListAdapter
 
 class PlayingFragment : Fragment() {
 
@@ -27,6 +26,10 @@ class PlayingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (activity as? PlayerBaseActivity)?.let { myactivity ->
+            myactivity
+        }
+
         binding.apply {
             playingRecycler.setHasFixedSize(true)
             playingRecycler.layoutManager = GridLayoutManager(activity, 2)
@@ -34,15 +37,17 @@ class PlayingFragment : Fragment() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        val db = DataBaseGaymerList(requireContext().applicationContext)
-
-        val user = getUserData(requireContext())
-        var games: List<Game> = emptyList()
-        if (user != null){ games = db.getGames(user.username, "Jogando") }
-
-        adapter = GameListAdapter(requireActivity(), games)
-        binding.playingRecycler.adapter = adapter
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        val db = DataBaseGaymerList(requireContext().applicationContext)
+//
+//        val user = getUserData(requireContext())
+//        var games: List<Game> = emptyList()
+//        if (user != null) {
+//            games = db.getGames(user.username, "Jogando")
+//        }
+//
+//        adapter = GameListAdapter(requireActivity(), games)
+//        binding.playingRecycler.adapter = adapter
+//    }
 }

@@ -38,18 +38,18 @@ class GameListActivity : PlayerBaseActivity() {
     private lateinit var navController: NavController
 
     //    private var actionMode: ActionMode? = null
-    private var dialog = Dialog(this)
+    private lateinit var dialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        dialogAddGameFactory()
-        makeAddGameButton()
+
         makeNavBarNavigation()
         makeAppBarConfiguration()
-
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+        dialogAddGameFactory()
+        makeAddGameButton()
         logoutButtonConfiguration()
         namePlayerDrawerSetup()
     }
@@ -114,6 +114,7 @@ class GameListActivity : PlayerBaseActivity() {
     }
 
     private fun dialogAddGameFactory() {
+        dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.modal_add_game)

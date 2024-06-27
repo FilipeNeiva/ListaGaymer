@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listagaymer.R
-import com.example.listagaymer.data.Game
 import com.example.listagaymer.databinding.GameListAdapterBinding
+import com.example.listagaymer.model.Game
 
 class GameListAdapter(var context: Context, games: List<Game>) :
     RecyclerView.Adapter<GameListAdapter.ItemViewHolder>() {
@@ -78,17 +78,17 @@ class GameListAdapter(var context: Context, games: List<Game>) :
     @SuppressLint("NotifyDataSetChanged")
     fun deleteGame(game: Game) {
 
-        val db = DataBaseGaymerList(context)
-        db.removeGame(game)
-        db.close()
-
-        try {
-            listGames.remove(game)
-            notifyDataSetChanged()
-        } catch (e: Exception) {
-            listGames = mutableListOf()
-            notifyDataSetChanged()
-        }
+//        val db = DataBaseGaymerList(context)
+//        db.removeGame(game)
+//        db.close()
+//
+//        try {
+//            listGames.remove(game)
+//            notifyDataSetChanged()
+//        } catch (e: Exception) {
+//            listGames = mutableListOf()
+//            notifyDataSetChanged()
+//        }
     }
 }
 
