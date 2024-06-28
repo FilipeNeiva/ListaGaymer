@@ -22,7 +22,7 @@ abstract class PlayerBaseActivity : AppCompatActivity() {
     }
 
     private var _player: MutableStateFlow<Player?> = MutableStateFlow(null)
-    protected val player: StateFlow<Player?> = _player
+    val player: StateFlow<Player?> = _player
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
