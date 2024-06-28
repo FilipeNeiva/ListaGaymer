@@ -44,9 +44,9 @@ class PlayingFragment : Fragment() {
         (activity as? PlayerBaseActivity)?.let { activity ->
             lifecycleScope.launch {
                 activity.player.collect { player ->
-                    player?.let { player ->
+                    player?.let { playerLoad ->
                         gameDao
-                            ?.getGames(player.username, "Jogando")
+                            ?.getGames(playerLoad.username, "Jogando")
                             ?.collect { games ->
                                 adapter = GameListAdapter(requireActivity(), games)
                                 binding.playingRecycler.adapter = adapter

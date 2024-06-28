@@ -2,7 +2,6 @@ package com.example.listagaymer.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +16,6 @@ import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
-    private val TAG = "LoginActivity"
     private val binding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }

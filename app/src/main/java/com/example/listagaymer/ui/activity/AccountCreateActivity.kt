@@ -44,9 +44,9 @@ class AccountCreateActivity : AppCompatActivity() {
             try {
                 val player = getPlayer()
                 playerDao.create(player)
-                playerDao.authenticate(player.username, player.password)?.let { player ->
+                playerDao.authenticate(player.username, player.password)?.let { playerLoad ->
                     dataStore.edit { preferences ->
-                        preferences[LoggedPlayerPreferences] = player.username
+                        preferences[LoggedPlayerPreferences] = playerLoad.username
                     }
                     goTo(GameListActivity::class.java) {
                         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
