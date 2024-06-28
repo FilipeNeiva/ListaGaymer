@@ -51,6 +51,7 @@ class AccountCreateActivity : AppCompatActivity() {
                     goTo(GameListActivity::class.java) {
                         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     }
+                    finish()
                 } ?: toast("Falha na autentificação")
             } catch (e: SQLiteConstraintException) {
                 Log.e("ERRO", e.stackTraceToString())
